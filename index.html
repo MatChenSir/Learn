@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>{{.Title}}</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>Welcome to my Vue Webpage!</h1>
+        <p v-if="message">Dynamic content from Vue: {{ "{{ message }}" }}</p>
+        <p v-else>No message available.</p>
+    </div>
+
+    <script>
+        var app = new Vue({
+          el: '#app',
+          data: {
+            message: '你好'
+          },
+          mounted: function() {
+            // Fetch data from Go server
+            fetch('/api/data')
+              .then(response => response.json())
+              .then(data => {
+                this.message = data.message;
+              })
+              .catch(error => {
+                console.error(error);
+              });
+          }
+        });
+    </script>
+</body>
+
+</html>
