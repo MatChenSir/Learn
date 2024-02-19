@@ -38,7 +38,8 @@ func main() {
 	//getLocahost()
 
 	//记录日志
-	test.CachedLog()
+	//test.CachedLog()
+
 }
 
 // 获得本地的IP地址
