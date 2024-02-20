@@ -32,6 +32,9 @@ func BasicType() {
 	float1, _ = strconv.ParseFloat(string1, 64) //字符串转float
 	float1 = float64(int1)                      //int转float 可直接转
 	fmt.Printf("float1的值为:%f,类型为:%v\n", float1, getType(float1))
+
+	string2 := strconv.FormatFloat(float1, 'f', 2, 64) // // 将浮点数转换为字符串，保留两位小数
+	fmt.Printf("string2的值为:%s,类型为:%v\n", string2, getType(string2))
 	// float32:  IEEE-754 32位浮点型数
 	// float64:  IEEE-754 64位浮点型数
 	// complex64:  32 位实数和虚数

@@ -19,13 +19,16 @@ func main() {
 	//test.DataStruct()
 
 	//数据类型
-	test.BasicType()
+	//test.BasicType()
 
 	//interface转string
 	//test.ConvertInterfaceToString()
 
 	//将函数作为参数传递
 	//test.FunctionAsParam()
+
+	//闭包
+	test.GetClosePackage()
 
 	// http.HandleFunc("/", handler.Handler)
 	// getLocahost()
