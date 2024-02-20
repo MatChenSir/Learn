@@ -16,8 +16,10 @@ func main() {
 	//test.MakeHttps()
 
 	//数据结构定义相关
+	//test.DataStruct()
 
-	test.DataStruct()
+	//数据类型
+	test.BasicType()
 
 	//interface转string
 	//test.ConvertInterfaceToString()
@@ -42,7 +44,12 @@ func main() {
 	//记录日志
 	//test.CachedLog()
 
-	fmt.Println("我出来了，测试结束，程序正常")
+	//佛祖保佑
+	//fmt.Println(test.StrConsole)
+	//test.ReadTxt()
+
+	fmt.Println(".............................................\n" +
+		"     佛祖镇楼                  BUG辟易")
 }
 
 // 获得本地的IP地址

@@ -148,8 +148,8 @@ func GgetRunne() {
 	for i := 0; i < len(runes); i++ {
 		fmt.Printf("%c ", runes[i])
 	}
-	fmt.Printf("字符串长度为 %d ", len(str))
-	fmt.Printf("字符串长度为 %d 个 Unicode 字符\n", len([]rune(str)))
+	fmt.Printf("(字符串长度为 %d  个 byte 字符,", len(str))
+	fmt.Printf("字符串长度为 %d 个 Unicode 字符)\n", len([]rune(str)))
 }
 
 func GetMap() {
