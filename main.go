@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	defer test.RecoverPainc() //一定得放第一行，否则任意一行panic就不会执行deffer了
 
 	//路径相关
 	//test.Test()
@@ -15,7 +16,8 @@ func main() {
 	//test.MakeHttps()
 
 	//数据结构定义相关
-	//test.DataStruct()
+
+	test.DataStruct()
 
 	//interface转string
 	//test.ConvertInterfaceToString()
@@ -40,6 +42,7 @@ func main() {
 	//记录日志
 	//test.CachedLog()
 
+	fmt.Println("我出来了，测试结束，程序正常")
 }
 
 // 获得本地的IP地址

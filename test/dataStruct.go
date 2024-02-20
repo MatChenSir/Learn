@@ -6,7 +6,12 @@ import (
 )
 
 func DataStruct() {
-	ArraryAndSlices()
+	defer RecoverPainc() //一定得放第一行，否则任意一行panic就不会执行deffer了
+	// SiglePointer()
+	// ArraryAndSlices()
+	// GetRunne()
+	GetMap()
+	fmt.Printf("哈哈哈哈,我来了")
 }
 
 func SiglePointer() {
@@ -117,6 +122,14 @@ func ArraryAndSlices() {
 	fmt.Printf("切片的容量为：%d\n", cap(slice6)) //扩容 当容量小于1024，则俩倍扩容，否则1.25倍扩容
 	fmt.Printf("第五个切片为%v,类型为:%v\n", slice6, getType(slice6))
 
+	// 局部：
+	// arr2 := [...]int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}
+	// slice5 := arr[start:end]
+	// slice6 := arr[:end]
+	// slice7 := arr[start:]
+	// slice8 := arr[:]
+	// slice9 := arr[:len(arr)-1] //去掉切片的最后一个元素
+
 }
 
 func getType(data interface{}) string {
@@ -127,7 +140,7 @@ func getType(data interface{}) string {
 
 //rune 实际上是 int32 的别名，用于表示 Unicode 码点
 //Unicode即非字母外的符号，如中文  Unicode 字符可以用多种编码方式来表示，其中最常见的是 UTF-8、UTF-16 和 UTF-32。
-func getRunne() {
+func GgetRunne() {
 	//简而言之， string底层三byte(ASCII 字符或一个非 ASCII 字符的字节), Unicode表示更占位置，用rune更好
 
 	str := "Hello, 世界"
@@ -137,4 +150,38 @@ func getRunne() {
 	}
 	fmt.Printf("字符串长度为 %d ", len(str))
 	fmt.Printf("字符串长度为 %d 个 Unicode 字符\n", len([]rune(str)))
+}
+
+func GetMap() {
+
+	//make 一个map
+	map1 := make(map[string]int)
+	map1["number1"] = 1
+	map1["number2"] = 2
+	fmt.Printf("map1的值为:%v, type为:%v\n", map1, getType(map1))
+
+	//直接赋值
+	map2 := map[string]string{"test1": "2", "test2": "2"}
+	fmt.Printf("map1的值为:%v, type为:%v\n", map2, getType(map2))
+
+	//var声明
+	var map3 map[string]int //空map
+
+	if map3 == nil {
+		fmt.Println("map3是nil")
+	}
+	map4 := map3
+	panic("报错了map3是nil")
+	for k, v := range map4 {
+		fmt.Println("key:", k, "value:", v)
+	}
+	fmt.Printf("map1的值为:%v, type为:%v\n", map3, getType(map3))
+
+}
+
+//报错捕获 保护性机制，防止程序崩溃
+func RecoverPainc() {
+	if r := recover(); r != nil {
+		fmt.Println("捕获报错信息", r)
+	}
 }
