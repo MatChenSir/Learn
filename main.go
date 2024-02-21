@@ -28,7 +28,10 @@ func main() {
 	//test.FunctionAsParam()
 
 	//闭包
-	test.GetClosePackage()
+	//test.GetClosePackage()
+
+	//并发和并行
+	test.ConcurrencyAndParallelism()
 
 	// http.HandleFunc("/", handler.Handler)
 	// getLocahost()

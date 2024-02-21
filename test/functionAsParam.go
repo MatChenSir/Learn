@@ -2,8 +2,10 @@ package test
 
 import (
 	"fmt"
+	"runtime"
 	"strconv"
 	"sync"
+	"time"
 )
 
 func FunctionAsParam() {
@@ -54,4 +56,66 @@ func GetClosePackage() {
 	wg.Wait() // 等待所有的 goroutine 完成，如果没有，可能就跳过上面的goroutines直接执行下面的了
 
 	fmt.Println("All goroutines completed.")
+
+	//wg.Add() 和 wg.Wait() 区别
+	//是 sync.WaitGroup 结构体提供的两个方法，用于并发控制
+	//wg.Add() 方法用于向 WaitGroup 中添加等待的计数器，而wg.Wait() 方法时，主 goroutine 会被阻塞，直到所有的等待计数器都被逐个减为零！！！！！
+
+}
+
+//并法和并行  ---->>>>两者的区别在于对cpu核的利有，并行往往多核处理，并发是单核或处理不足情况下一起执行的并由调度器处理分配使用cpu的一种情况
+func ConcurrencyAndParallelism() {
+	//Concurrency() //并发执行，并由调度器分配，如果个人想优先执行某个goroutines,可通过sync.Mutex或者channel来辅助
+	Parallelism()
+}
+
+//并发
+func Concurrency() {
+	fmt.Println("开发并发执行了")
+	//并发
+	runtime.GOMAXPROCS(1)
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 200; i++ {
+			fmt.Printf("开始执行test1了,已经执行到了第%v 个了;\n", i)
+			time.Sleep(time.Microsecond * 500) //模拟消耗的资源来测到 因为调度器设计来尽可能公平地分配 CPU 时间给所有 goroutines，如果资源太少可能看不到调度的过程
+		}
+
+	}()
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 200; i++ {
+			fmt.Printf("开始执行test2了,已经执行到了第%v 个了;\n", i)
+			time.Sleep(time.Microsecond * 500) //模拟消耗的资源来测到 因为调度器设计来尽可能公平地分配 CPU 时间给所有 goroutines，如果资源太少可能看不到调度的过程
+		}
+
+	}()
+	wg.Wait()
+
+}
+
+//并行
+func Parallelism() {
+	//并发执行可以让他并行，并行一定是并发
+
+	fmt.Println("开发并发执行了")
+	//并发
+	runtime.GOMAXPROCS(2)
+	wg.Add(2)
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 200; i++ {
+			fmt.Printf("开始执行并行1了,已经执行到了第%v 个了;\n", i)
+		}
+
+	}()
+	go func() {
+		defer wg.Done()
+		for i := 0; i < 200; i++ {
+			fmt.Printf("开始执行并行2了,已经执行到了第%v 个了;\n", i)
+		}
+
+	}()
+	wg.Wait()
 }
