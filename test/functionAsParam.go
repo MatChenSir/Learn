@@ -65,8 +65,8 @@ func GetClosePackage() {
 
 //并法和并行  ---->>>>两者的区别在于对cpu核的利有，并行往往多核处理，并发是单核或处理不足情况下一起执行的并由调度器处理分配使用cpu的一种情况
 func ConcurrencyAndParallelism() {
-	//Concurrency() //并发执行，并由调度器分配，如果个人想优先执行某个goroutines,可通过sync.Mutex或者channel来辅助
-	Parallelism()
+	Concurrency() //并发执行，并由调度器分配，如果个人想优先执行某个goroutines,可通过sync.Mutex或者channel来辅助
+	//Parallelism() //并行执行
 }
 
 //并发
@@ -77,6 +77,8 @@ func Concurrency() {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
+		// mu.Lock() //加入这两行将会使代码不并发，并单个goroutines的执行    ！！！！！！虽然会单个执行，但因为是goroutines，执行顺序会由调度器决定
+		// defer mu.Unlock()
 		for i := 0; i < 200; i++ {
 			fmt.Printf("开始执行test1了,已经执行到了第%v 个了;\n", i)
 			time.Sleep(time.Microsecond * 500) //模拟消耗的资源来测到 因为调度器设计来尽可能公平地分配 CPU 时间给所有 goroutines，如果资源太少可能看不到调度的过程
@@ -85,6 +87,8 @@ func Concurrency() {
 	}()
 	go func() {
 		defer wg.Done()
+		// mu.Lock() //加入这两行将会使代码不并发，并单个goroutines的执行   ！！！！！！虽然会单个执行，但因为是goroutines，执行顺序会由调度器决定
+		// defer mu.Unlock()
 		for i := 0; i < 200; i++ {
 			fmt.Printf("开始执行test2了,已经执行到了第%v 个了;\n", i)
 			time.Sleep(time.Microsecond * 500) //模拟消耗的资源来测到 因为调度器设计来尽可能公平地分配 CPU 时间给所有 goroutines，如果资源太少可能看不到调度的过程
@@ -119,3 +123,20 @@ func Parallelism() {
 	}()
 	wg.Wait()
 }
+
+// func channel() {
+// 	//通道（channel）是一种用于在goroutine之间进行通信和同步的机制, 但也可以通过make来声明，故我放在了数据结构里面来展示
+
+// 	//非缓冲通道
+// 	ch1 := make(chan int)
+// 	// 	带缓冲的通道允许在通道中存储多个值，直到缓冲区被填满。
+// 	// 发送数据到带缓冲通道不会阻塞，除非缓冲区已满。
+// 	// 从带缓冲通道接收数据不会阻塞，除非缓冲区为空。
+// 	// 当通道中缓冲区已满时，发送操作会阻塞；当通道中缓冲区为空时，接收操作会阻塞  !!!!!!!!!
+
+// 	//缓冲通道
+// 	ch2 := make(chan int, 10)
+// 	// 	不带缓冲的通道在发送数据时会立即阻塞等待接收方接收，接收方在接收数据之前也会阻塞等待发送方发送。
+// 	// 通道的发送和接收操作是同步的，数据直接从发送方传递到接收方。
+// 	// 当通道中没有接收方时，发送操作会一直阻塞；当通道中没有发送方时，接收操作会一直阻塞。
+// }

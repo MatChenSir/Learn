@@ -1,13 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"main/test"
 	"net"
+	"sync"
+	"testing"
+	"time"
 )
 
+var wg sync.WaitGroup
+
 func main() {
-	defer test.RecoverPainc() //一定得放第一行，否则任意一行panic就不会执行deffer了
+	//defer test.RecoverPainc() //一定得放第一行，否则任意一行panic就不会执行deffer了
 
 	//路径相关
 	//test.Test()
@@ -31,7 +37,7 @@ func main() {
 	//test.GetClosePackage()
 
 	//并发和并行
-	test.ConcurrencyAndParallelism()
+	//test.ConcurrencyAndParallelism()
 
 	// http.HandleFunc("/", handler.Handler)
 	// getLocahost()
@@ -54,6 +60,9 @@ func main() {
 	//fmt.Println(test.StrConsole)
 	//test.ReadTxt()
 
+	//timeout()
+	test.TestGrountine()
+	time.Sleep(time.Second * 3)
 	fmt.Println(".............................................\n" +
 		"     佛祖镇楼                  BUG辟易")
 }
@@ -93,4 +102,32 @@ func bindData() {
 	test.SingletonUserRepository = &test.UserRepository{Name: "bbt"}
 	user3, _ := test.SingletonUserRepository.InsertAdUserInfoWithDefaults("user")
 	println("user:" + user1.Username + "  user2:" + user2.Username + "  user3:" + user3.Username)
+}
+
+func TestWiths(t *testing.T) {
+
+}
+
+func worker(ctx context.Context) {
+LOOP:
+	for {
+		fmt.Println("worker")
+		//time.Sleep(time.Second)
+		select {
+		case <-ctx.Done(): // 等待上级通知
+			break LOOP
+		default:
+		}
+	}
+	//wg.Done()
+}
+
+func timeout() {
+	ctx, cancel := context.WithCancel(context.Background())
+	//wg.Add(1)
+	go worker(ctx)
+
+	cancel() // 通知子goroutine结束
+	//wg.Wait()
+	fmt.Println("over")
 }
