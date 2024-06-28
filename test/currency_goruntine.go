@@ -61,8 +61,10 @@ func TestGrountine() {
 		{ID: 43, Name: "Env3", CloudEnv: 300},
 		{ID: 44, Name: "Env4", CloudEnv: 0}, // CloudEnv 为 0 的环境跳过处理
 	}
+	dd := len(envList) / 20 //可动态设置通道容量
+	fmt.Printf("dd is : %v\n", dd)
 	var wg sync.WaitGroup
-	semaphore := make(chan struct{}, 10) //并发控制: 使用一个带有容量的通道 semaphore 来控制并发度，容量为 10
+	semaphore := make(chan struct{}, dd) //并发控制: 使用一个带有容量的通道 semaphore 来控制并发度，容量为 10
 	//确保最多同时有 10 个 goroutine 在运行。每个 goroutine 进入时，会占用一个通道位置，执行完毕后释放，这样就限制了最大并发数量为 10。
 	wg.Add(len(envList)) //等待总个数
 
