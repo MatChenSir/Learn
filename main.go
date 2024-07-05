@@ -61,10 +61,17 @@ func main() {
 	//test.ReadTxt()
 
 	//timeout()
-	test.TestGrountine()
+	//test.TestGrountine()
+
+	test.CheckStruct()
 	time.Sleep(time.Second * 3)
 	fmt.Println(".............................................\n" +
 		"     佛祖镇楼                  BUG辟易")
+
+	i := 7
+	b := &i
+	i = 8
+	fmt.Println(*b)
 }
 
 // 获得本地的IP地址

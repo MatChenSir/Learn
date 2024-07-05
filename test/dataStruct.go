@@ -185,3 +185,20 @@ func RecoverPainc() {
 		fmt.Println("捕获报错信息", r)
 	}
 }
+
+//检查空结构体
+func CheckStruct() {
+	var tt Environment
+	//tt.ID = 2
+	if IsStructEmpty(tt) {
+		fmt.Printf("这是一个空的结构体")
+	} else {
+		fmt.Printf("这个结构体不为空 %v\n", tt.ID)
+	}
+
+}
+
+func IsStructEmpty(s interface{}) bool {
+	zeroValue := reflect.Zero(reflect.TypeOf(s))
+	return reflect.DeepEqual(s, zeroValue.Interface())
+}
