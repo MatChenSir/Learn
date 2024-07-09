@@ -43,6 +43,17 @@ func BasicType() {
 
 	//其他数字类型
 	// byte:  uint8的类型别名
+	str := "hello"
+	byteSlice := []byte(str)
+
+	// 修改字节切片
+	byteSlice[0] = 'H'
+
+	// 将修改后的字节切片转换回字符串
+	modifiedStr := string(byteSlice)
+	fmt.Printf("byte的值为:%v,string为:%v\n", byteSlice, modifiedStr)
+	//结果byte的值为:[72 101 108 108 111],string为:Hello
+
 	// rune:  int32的类型别名   多用于用于表示 Unicode 码点，可见方法
 	GgetRunne()
 	// uint:  32 或 64 位

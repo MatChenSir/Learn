@@ -7,7 +7,6 @@ import (
 	"net"
 	"sync"
 	"testing"
-	"time"
 )
 
 var wg sync.WaitGroup
@@ -63,8 +62,22 @@ func main() {
 	//timeout()
 	//test.TestGrountine()
 
-	test.CheckStruct()
-	time.Sleep(time.Second * 3)
+	// test.CheckStruct()
+	// time.Sleep(time.Second * 3)
+
+	//算法题目相关
+
+	// nums := []int{7, 8, 9, 0, 2, 0, 5, 11}
+	// test.MoveZeros(nums)
+
+	//strs := []string{"eat", "tea", "tan", "ate", "nat", "bat"}
+	// strs := []string{"eat", "tea"}
+	// tt := test.GroupAnagrams(strs)
+	// fmt.Println(tt)
+
+	//test.Worker()
+	test.Worker2()
+
 	fmt.Println(".............................................\n" +
 		"     佛祖镇楼                  BUG辟易")
 
