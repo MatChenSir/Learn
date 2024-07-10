@@ -76,7 +76,10 @@ func main() {
 	// fmt.Println(tt)
 
 	//test.Worker()
-	test.Worker2()
+	//test.Worker2()
+
+	//	numbers := []int{3, 7, 2, 8, 34, 221, 85, 94, 3, 9, 90}
+	test.GetTargetNums(221)
 
 	fmt.Println(".............................................\n" +
 		"     佛祖镇楼                  BUG辟易")

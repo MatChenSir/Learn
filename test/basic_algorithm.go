@@ -145,3 +145,41 @@ func Woker4() {
 	// 输出结构体的值
 	fmt.Println("Value set:", obj.aValue)
 }
+
+//二分发查询一组数组的指定值
+func GetTargetNums(target int) {
+	numbers := []int{3, 7, 2, 8, 34, 221, 85, 94, 3, 9, 90}
+
+	//首先给数组排序转化成有序数组
+	sort.Ints(numbers)
+
+	//取得最大值和最小值区间
+	low, high := 0, len(numbers)
+	i := 0
+	for low < high {
+		i++
+		fmt.Println("寻找下标中...", i)
+		if target == numbers[high-1] {
+			fmt.Println("目标值下标是%v", high-1)
+			break
+		}
+
+		if high-low-1 <= 0 {
+			fmt.Println("找不到目标值")
+			break
+		}
+		half := (high + low) / 2 //low本身为0 ，如果二分发生偏移，说明需要找到中间定位需要往上加
+		if target < numbers[half] {
+			high = half
+		} else if target > numbers[half] {
+			low = half
+		} else {
+			fmt.Printf("目标值 %v 的下标是 %v\n", target, half) //即中间值刚好为目标值
+			break
+		}
+
+		// if i == 10 {
+		// 	break
+		// }
+	}
+}
