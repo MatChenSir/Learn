@@ -183,3 +183,107 @@ func GetTargetNums(target int) {
 		// }
 	}
 }
+
+/*
+package main
+
+import "fmt"
+
+// 已知数组 A, B, 如果 A 中元素在 B 数组存在，打印出这个元素的下标，B 数组是不重复的.
+// Input: [5, 3, 1, 5, 4] [5, 3]
+// Output: [0, 1, 3]
+
+func main() {
+  a := []int{5, 3, 1, 5, 4}
+  b := []int{5, 3}
+  fmt.Println(a)
+  fmt.Println(b)
+}*/
+
+func FindIndex() {
+	a := []int{5, 3, 1, 5, 4}
+	b := []int{5, 3}
+
+	map1 := make(map[int]int)
+
+	for index, value := range b {
+		map1[value] = index
+	}
+
+	for in, second := range a {
+		if _, ok := map1[second]; ok {
+			fmt.Println(in)
+		}
+	}
+
+	fmt.Println(a)
+	fmt.Println(b)
+
+}
+
+/*以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。
+请你合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
+
+示例 1：
+输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
+输出：[[1,6],[8,10],[15,18]]
+解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+示例 2：
+
+输入：intervals = [[1,4],[4,5]]
+输出：[[1,5]]
+解释：区间 [1,4] 和 [4,5] 可被视为重叠区间。*/
+func MergeArrary(array [][]int) {
+	sort.Slice(array, func(i, j int) bool { return array[i][0] < array[j][0] })
+	var out [][]int
+	var index []int
+	for e, arr := range array {
+		exists := false
+		for _, v2 := range index {
+			if e == v2 {
+				exists = true
+			}
+		}
+		if exists {
+			continue
+		}
+		for t, v := range array {
+			if v[0] == arr[0] && v[1] == arr[1] {
+				index = append(index, t)
+				continue
+
+			}
+			//if v[0]+1 <= arr[len(arr)-1] && v[len(arr)-1] >= arr[0]+1 {
+			fmt.Printf("the arr is%+v\n", arr)
+			fmt.Printf("the v is%+v\n", v)
+			//[[0,4],[3,5]]
+			if arr[0] <= v[0] && arr[len(arr)-1] >= v[0] { //第一个数组第一位小于第二个数组第一位，第一个数组第二位小于第二个数组第二位，第一个数组第二位小于等于第二个数组第一位
+				//if arr[0]+1 <= v[len(v)-1] && arr[len(arr)-1] >= v[0]+1 {
+				exists = true
+				//the data is [[1 3] [2 3] [1 6] [2 6] [8 10] [15 18]]
+				if v[0] < arr[0] {
+					if arr[len(arr)-1] <= v[len(v)-1] {
+						out = append(out, []int{v[0], v[len(v)-1]})
+					} else {
+						out = append(out, []int{v[0], arr[len(arr)-1]})
+					}
+				} else {
+					//out = append(out, []int{arr[0], v[len(v)-1]})
+					if arr[len(arr)-1] <= v[len(v)-1] {
+						out = append(out, []int{arr[0], v[len(v)-1]})
+					} else {
+						out = append(out, []int{arr[0], arr[len(arr)-1]})
+					}
+				}
+
+				index = append(index, t)
+			}
+		}
+
+		if !exists {
+			out = append(out, arr)
+		}
+
+	}
+	fmt.Printf("the data is %+v\n", out)
+}

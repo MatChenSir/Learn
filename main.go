@@ -79,15 +79,21 @@ func main() {
 	//test.Worker2()
 
 	//	numbers := []int{3, 7, 2, 8, 34, 221, 85, 94, 3, 9, 90}
-	test.GetTargetNums(221)
+	///test.GetTargetNums(221)
 
-	fmt.Println(".............................................\n" +
-		"     佛祖镇楼                  BUG辟易")
+	//test.FindIndex()
+	// intervals := [][]int{{0, 4}, {3, 5}, {8, 10}, {15, 18}}
+	// test.MergeArrary(intervals)
 
-	i := 7
-	b := &i
-	i = 8
-	fmt.Println(*b)
+	// fmt.Println(".............................................\n" +
+	// 	"     佛祖镇楼                  BUG辟易")
+
+	// i := 7
+	// b := &i
+	// i = 8
+	// fmt.Println(*b)
+	//test.PersonalTestPointer()
+	test.TestPrint()
 }
 
 // 获得本地的IP地址
