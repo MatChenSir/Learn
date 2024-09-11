@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+	"math/rand"
 	"sort"
 	"strings"
 	"sync"
@@ -286,4 +287,114 @@ func MergeArrary(array [][]int) {
 
 	}
 	fmt.Printf("the data is %+v\n", out)
+}
+
+type Option struct {
+	ID       int
+	NoRandom bool
+}
+
+//下面是一个Go语言的代码示例，它可以随机打乱数组中的元素，但保持noRandom为true的元素位置不变
+func shuffleOptions(options []Option) []Option {
+	// 分离出需要随机打乱和不需要随机打乱的元素
+	var fixed []Option
+	var toShuffle []Option
+
+	for _, option := range options {
+		if option.NoRandom {
+			fixed = append(fixed, option)
+		} else {
+			toShuffle = append(toShuffle, option)
+		}
+	}
+	// 打乱需要随机打乱的元素
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(toShuffle), func(i, j int) {
+		toShuffle[i], toShuffle[j] = toShuffle[j], toShuffle[i]
+	})
+	// 将打乱后的元素和固定位置的元素合并
+	var result []Option
+	shuffleIndex := 0
+	for _, option := range options {
+		if option.NoRandom {
+			result = append(result, option)
+		} else {
+			result = append(result, toShuffle[shuffleIndex])
+			shuffleIndex++
+		}
+	}
+	return result
+}
+
+func Learn1() {
+	options := []Option{
+		{ID: 1, NoRandom: true},
+		{ID: 2, NoRandom: false},
+		{ID: 3, NoRandom: false},
+		{ID: 4, NoRandom: true},
+		{ID: 5, NoRandom: false},
+	}
+
+	shuffledOptions := shuffleOptions(options)
+	fmt.Println("Shuffled Options:")
+	for _, option := range shuffledOptions {
+		fmt.Printf("ID: %d, NoRandom: %t\n", option.ID, option.NoRandom)
+	}
+}
+
+// 定义节点结构体
+type Node struct {
+	ID       int
+	Children []*Node
+}
+
+// 生成级联树结构的函数
+func generateTree(depth, breadth, currentID int) (*Node, int) {
+	if depth == 0 {
+		return nil, currentID
+	}
+
+	node := &Node{ID: currentID}
+	currentID++
+
+	for i := 0; i < breadth; i++ {
+		child, newID := generateTree(depth-1, breadth, currentID)
+		if child != nil {
+			node.Children = append(node.Children, child)
+		}
+		currentID = newID
+	}
+
+	return node, currentID
+}
+
+// 打印树结构的函数
+func printTree(node *Node, level int) {
+	if node == nil {
+		return
+	}
+	// 打印当前节点
+	fmt.Printf("%sNode ID: %d\n", getIndent(level), node.ID)
+
+	// 递归打印子节点
+	for _, child := range node.Children {
+		printTree(child, level+1)
+	}
+}
+
+// 获取缩进字符串
+func getIndent(level int) string {
+	indent := ""
+	for i := 0; i < level; i++ {
+		indent += "  "
+	}
+	return indent
+}
+
+func Learn2() {
+	// 生成一个深度为3，宽度为2的树
+	root, _ := generateTree(3, 2, 1)
+
+	// 打印树结构
+	printTree(root, 0)
 }
